@@ -24,3 +24,7 @@ variable "service_account_name" {
   default     = "aws-load-balancer-controller"
   description = "ALB Controller service account name"
 }
+
+variable "cf_name" { type = string }
+
+variable "alb_arn" { type = string }
