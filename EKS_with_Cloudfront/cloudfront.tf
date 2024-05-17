@@ -37,7 +37,7 @@ resource "aws_cloudfront_distribution" "main" {
       headers = ["Host"]
 
       cookies {
-        forward = "none"
+        forward = "all"
       }
     }
 
@@ -62,9 +62,12 @@ resource "aws_cloudfront_distribution" "main" {
     cloudfront_default_certificate = true
   }
 
-  default_root_object = "index.html"
+}
 
+data "aws_cloudfront_distribution" "cf" {
+  id = "${aws_cloudfront_distribution.main.id}"
 }
 
 ### Outputs
 output "cf_id" { value = aws_cloudfront_distribution.main.id }
+output cf_domain_name { value = data.aws_cloudfront_distribution.cf.domain_name}
