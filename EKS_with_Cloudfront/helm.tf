@@ -11,7 +11,7 @@ resource "helm_release" "hello" {
   namespace = kubernetes_namespace.vic-ns.metadata[0].name
 
   values = [
-    templatefile("${path.module}/hello-values.yaml",{ host = "${data.kubernetes_ingress_v1.ingress_hostname.status.0.load_balancer.0.ingress.0.hostname}" })
+    templatefile("${path.module}/hello-values.yaml",{ host = "${data.kubernetes_ingress_v1.ingress_hostname.status.0.load_balancer.0.ingress.0.hostname}" , domain_name = "${data.aws_cloudfront_distribution.cf.domain_name}" })
   ]
     # values = [
     # file("${path.module}/hello-values.yaml")

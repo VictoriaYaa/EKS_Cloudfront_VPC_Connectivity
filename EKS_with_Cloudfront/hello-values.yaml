@@ -14,4 +14,4 @@ ingress:
         alb.ingress.kubernetes.io/scheme: internet-facing
         service.beta.kubernetes.io/aws-load-balancer-type: alb
         alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
-        alb.ingress.kubernetes.io/conditions.hello: '[{"Field":"host-header","HostHeaderConfig":{"Values":["d2adwlszex2vd4.cloudfront.net"]}}]'
+        alb.ingress.kubernetes.io/conditions.hello: '[{"Field":"host-header","HostHeaderConfig":{"Values":["${domain_name}"]}}]'
