@@ -10,6 +10,30 @@ resource "aws_lb" "nlb" {
   enable_deletion_protection = false
 }
 
+resource "aws_lb_target_group" "lb_tg" {
+  name     = "lb-tg"
+  port     = 22
+  protocol = "TCP"
+  vpc_id   = module.vpc_1.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "lb_tg_attach" {
+  target_group_arn = aws_lb_target_group.lb_tg.arn
+  target_id        = aws_instance.instance_1.id
+  port             = 22
+}
+
+resource "aws_lb_listener" "lb_listener_vpc1" {
+  load_balancer_arn = aws_lb.nlb.arn
+  port              = "22"
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+  }
+}
+
 resource "aws_vpc_endpoint_service" "vpc_endpoint" {
   acceptance_required        = false
   network_load_balancer_arns = [aws_lb.nlb.arn]
